@@ -10,33 +10,43 @@ import loadingGif from "../assets/loading.gif";
 import { CardMedia } from "@mui/material";
 import { useSelector } from "react-redux";
 import FirmModal from "../components/FirmModal";
+import EditFirmModal from "../components/EditFirmModal";
+
 const Firms = () => {
   const { getFirms, firmDelete } = useStockRequest();
   const { firms, loading, error } = useSelector((state) => state.firms);
-  console.log(firms);
+  const [selectedFirm, setSelectedFirm] = useState(null);
+  const [editOpen, setEditOpen] = useState(false);
 
-  const [open, setOpen] = useState(false);
+  //const [open, setOpen] = useState(false);
 
   useEffect(() => {
     getFirms();
   }, []);
+
+  const handleEdit = (firm) => {
+    setSelectedFirm(firm);
+    setEditOpen(true);
+  };
+
   return (
     <>
-      <h1>Firmalar</h1>
+      <h1 style={{ textAlign: "center" }}>FIRMS</h1>
       {loading && <img src={loadingGif} alt="gif" />}
       {error && (
         <Typography variant="h4" color="error" component="div">
           Oops Somehing went wrong
         </Typography>
       )}
-      <Button
-        size="small"
-        target="_blank"
-        sx={{ border: "2px solid black" }}
-        onClick={() => setOpen(true)}
-      >
-        NEW FIRM
-      </Button>
+      {selectedFirm && (
+        <EditFirmModal
+          firm={selectedFirm}
+          open={editOpen}
+          setOpen={setEditOpen}
+        />
+      )}
+      <FirmModal />
+
       <Box
         xs={{ d: "flex" }}
         display="flex"
@@ -53,6 +63,7 @@ const Firms = () => {
               maxHeight: 500,
               padding: 1,
               textAlign: "center",
+              boxShadow: "2px 2px 10px black",
             }}
           >
             <Typography gutterBottom variant="h5" component="div">
@@ -75,18 +86,28 @@ const Firms = () => {
                 {item?.phone}
               </Typography>
             </CardContent>
-            <CardActions>
+            <CardActions
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <Button size="small" onClick={() => firmDelete(item._id)}>
                 🗑 Delete
               </Button>
-              <Button size="small" href={item?.url} target="_blank">
+              <Button
+                size="small"
+                href={item?.url}
+                target="_blank"
+                onClick={() => handleEdit(item)}
+              >
                 🖊 Edit
               </Button>
             </CardActions>
           </Card>
         ))}
       </Box>
-      <FirmModal open={open} setOpen={setOpen} />
     </>
   );
 };

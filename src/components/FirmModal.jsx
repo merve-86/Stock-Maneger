@@ -20,14 +20,14 @@ const style = {
   p: 4,
 };
 
-const FirmModal = ({ open, setOpen }) => {
-  // const [open, setOpen] = React.useState(false);
+const FirmModal = () => {
+  const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <Button variant="contained" sx={{boxShadow: "2px 2px 5px black"}} onClick={handleOpen}>NEW FIRM</Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -35,18 +35,16 @@ const FirmModal = ({ open, setOpen }) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
+         
           <IconButton aria-label="close" onClick={() => setOpen(false)}>
             <CloseIcon />
           </IconButton>
           <Formik
             initialValues={{
-              firmName: "",
-              firmPhone: "",
-              firmAddess: "",
-              firmImg: "",
+              name: "",
+              phone: "",
+              address: "",
+              image: "",
             }}
             validationSchema={firmSchema}
             onSubmit={(values, actions) => {

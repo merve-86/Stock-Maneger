@@ -4,14 +4,13 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { object, string, number } from "yup";
 import { Form } from "formik";
+import useStockRequest from "../services/useStockRequest";
+
 export const firmSchema = object({
-  firmName: string().required("Firma adı zorunludur"),
-  firmPhone: number()
-    .required("Firma telefonu zorunludur")
-    .positive()
-    .integer(),
-  firmAddress: string().required("Firma adresi zorunludur"),
-  firmImg: string().url().nullable("Firma fotoğrafı zorunludur"),
+  name: string().required("Firma adı zorunludur"),
+  phone: number().required("Firma telefonu zorunludur").positive().integer(),
+  address: string().required("Firma adresi zorunludur"),
+  image: string().url().nullable("Firma fotoğrafı zorunludur"),
 });
 const FirmModalForm = ({
   values,
@@ -20,59 +19,57 @@ const FirmModalForm = ({
   touched,
   handleBlur,
 }) => {
+  const { createFirm } = useStockRequest();
+
   return (
     <Form>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         <TextField
           label="Firm Name"
-          name="firmName"
-          id="firmName"
+          name="name"
+          id="name"
           type="text"
           variant="outlined"
-          value={values.firmName}
+          value={values.name}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.firmName && Boolean(errors.firmName)}
-          helperText={touched.firmName && errors.firmName}
+          error={touched.name && Boolean(errors.name)}
+          helperText={touched.name && errors.name}
         />
         <TextField
           label="Firm Phone"
-          name="firmPhone"
-          id="firmPhone"
-          type="tel"
+          name="phone"
+          id="phone"
+          type="text"
+          value={values.phone}
+          onChange={handleChange}
           pattern="[0-9]{4}-[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}"
           variant="outlined"
-          //   value={values.firstName}
-          //   onChange={handleChange}
-          //   onBlur={handleBlur}
-          //   error={touched.firstName && Boolean(errors.firstName)}
-          //   helperText={touched.firstName && errors.firstName}
         />
         <TextField
-          label="firmAddress"
-          name="firmAddress"
-          id="firmAddress"
+          label="Firm Address"
+          name="address"
+          id="address"
           type="text"
+          value={values.address}
+          onChange={handleChange}
           variant="outlined"
-          //   value={values.email}
-          //   onChange={handleChange}
-          //   onBlur={handleBlur}
-          //   error={touched.email && Boolean(errors.email)}
-          //   helperText={touched.email && errors.email}
         />
         <TextField
           label="Firm Image"
-          name="firmImg"
-          id="firmImg"
-          type="image"
+          name="image"
+          id="image"
+          type="text"
+          value={values.image}
+          onChange={handleChange}
           variant="outlined"
-          //   value={values.password}
-          //   onChange={handleChange}
-          //   onBlur={handleBlur}
-          //   error={touched.password && Boolean(errors.password)}
-          //   helperText={touched.password && errors.password}
         />
-        <Button type="submit" variant="contained" size="large">
+        <Button
+          type="submit"
+          variant="contained"
+          size="large"
+          onClick={() => createFirm(values)}
+        >
           Add Firm
         </Button>
       </Box>

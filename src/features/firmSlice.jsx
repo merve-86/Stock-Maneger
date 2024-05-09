@@ -8,21 +8,34 @@ const firmSlice = createSlice({
   name: "firm",
   initialState,
   reducers: {
-    fetchStart: (state) => {
-      
+
+    fetchStart: (state) => {      
       state.loading = true;
     },
+
     firmSuccess: (state, { payload }) => {
-      state.firms = payload.data;
       state.loading = false;
+      state.firms = payload.data;
       state.error = false;
     },
-    fetchFail: (state) => {
-      
+
+    createFirmSuccess: (state, { payload }) => {
+      state.loading = false;
+      state.firms = [...state.firms, payload.data];
+      state.error = false;
+    },
+
+    updateFirmSuccess: (state, { payload }) => {
+      state.loading = false;
+      state.firms = [...state.firms, payload.data];
+      state.error = false;
+    },
+
+    fetchFail: (state) => {      
       state.loading = false;
       state.error = true;
     },
   },
 });
-export const { fetchStart, firmSuccess, fetchFail } = firmSlice.actions;
+export const { fetchStart, firmSuccess, fetchFail, createFirmSuccess, updateFirmSuccess } = firmSlice.actions;
 export default firmSlice.reducer;

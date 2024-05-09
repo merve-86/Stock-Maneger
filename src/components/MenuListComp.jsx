@@ -13,41 +13,40 @@ import StarsIcon from "@mui/icons-material/Stars";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useNavigate } from "react-router-dom";
 
-
 const MenuListComp = () => {
-    const navigate = useNavigate()
-   const icons = [
-     {
-       title: "Dashboard",
-       iconName: <DashboardCustomizeIcon />,
-       path: "/stock",
-     },
-     {
-       title: "Purchases",
-       iconName: <ShoppingCartIcon />,
-       path: "/stock/purchases/",
-     },
-     {
-       title: "Sales",
-       iconName: <AttachMoneyIcon />,
-       path: "/stock/sales/",
-     },
-     {
-       title: "Firms",
-       iconName: <StoreIcon />,
-       path: "/stock/firms/",
-     },
-     {
-       title: "Brands",
-       iconName: <StarsIcon />,
-       path: "/stock/brands/",
-     },
-     {
-       title: "Products",
-       iconName: <InventoryIcon />,
-       path: "/stock/products/",
-     },
-   ];
+  const navigate = useNavigate();
+  const icons = [
+    {
+      title: "Dashboard",
+      iconName: <DashboardCustomizeIcon />,
+      path: "/stock",
+    },
+    {
+      title: "Purchases",
+      iconName: <ShoppingCartIcon />,
+      path: "/stock/purchases/",
+    },
+    {
+      title: "Sales",
+      iconName: <AttachMoneyIcon />,
+      path: "/stock/sales/",
+    },
+    {
+      title: "Firms",
+      iconName: <StoreIcon />,
+      path: "/stock/firms/",
+    },
+    {
+      title: "Brands",
+      iconName: <StarsIcon />,
+      path: "/stock/brands/",
+    },
+    {
+      title: "Products",
+      iconName: <InventoryIcon />,
+      path: "/stock/products/",
+    },
+  ];
   return (
     <div>
       <List>
@@ -61,7 +60,7 @@ const MenuListComp = () => {
               "& .MuiSvgIcon-root": { color: "white" },
               "&:hover": {
                 color: "red",
-                "& .MuiSvgIcon-root": { color: "red" }, 
+                "& .MuiSvgIcon-root": { color: "red" },
               },
             }}
           >

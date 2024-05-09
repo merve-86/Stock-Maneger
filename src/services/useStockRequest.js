@@ -1,16 +1,49 @@
 //! custom hook alanı
 import { useDispatch } from "react-redux";
 import useAxios from "./useAxios";
-import { fetchStart, firmSuccess, fetchFail } from "../features/firmSlice";
+import {
+  fetchStart,
+  firmSuccess,
+  fetchFail,
+  createFirmSuccess,
+  updateFirmSuccess,
+} from "../features/firmSlice";
+
 const useStockRequest = () => {
   const { axiosToken } = useAxios();
   const dispatch = useDispatch();
+
   const getFirms = async () => {
     dispatch(fetchStart());
     try {
       const { data } = await axiosToken("/firms");
       // console.log(data);
       dispatch(firmSuccess(data));
+    } catch (error) {
+      // console.log(error);
+      dispatch(fetchFail());
+    }
+  };
+
+  const createFirm = async (firmInfo) => {
+    dispatch(fetchStart());
+    try {
+      const { data } = await axiosToken.post("/firms/", firmInfo);
+      // console.log(data);
+      dispatch(createFirmSuccess(data));
+    } catch (error) {
+      // console.log(error);
+      dispatch(fetchFail());
+    }
+  };
+
+  const updateFirm = async (id, firmInfo) => {
+    dispatch(fetchStart());
+    try {
+      const { data } = await axiosToken.put(`/firms/${id}`, firmInfo);
+      // console.log(data);
+      dispatch(updateFirmSuccess(data));
+      getFirms();
     } catch (error) {
       // console.log(error);
       dispatch(fetchFail());
@@ -27,6 +60,6 @@ const useStockRequest = () => {
       dispatch(fetchFail());
     }
   };
-  return { getFirms, firmDelete };
+  return { getFirms, firmDelete, createFirm };
 };
 export default useStockRequest;
