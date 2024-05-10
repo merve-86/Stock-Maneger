@@ -1,10 +1,8 @@
-import InboxIcon from "@mui/icons-material/MoveToInbox";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import MailIcon from "@mui/icons-material/Mail";
 import DashboardCustomizeIcon from "@mui/icons-material/DashboardCustomize";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import InventoryIcon from "@mui/icons-material/Inventory";
@@ -15,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 const MenuListComp = () => {
   const navigate = useNavigate();
+
   const icons = [
     {
       title: "Dashboard",
@@ -47,6 +46,7 @@ const MenuListComp = () => {
       path: "/stock/products/",
     },
   ];
+
   return (
     <div>
       <List>
@@ -58,10 +58,8 @@ const MenuListComp = () => {
             sx={{
               color: "white",
               "& .MuiSvgIcon-root": { color: "white" },
-              "&:hover": {
-                color: "red",
-                "& .MuiSvgIcon-root": { color: "red" },
-              },
+              "&:hover": { color: "red" },
+              "&:hover .MuiSvgIcon-root": { color: "red" },
             }}
           >
             <ListItemButton>

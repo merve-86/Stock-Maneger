@@ -1,114 +1,53 @@
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+// import useAxios from "../services/useAxios"
 import useStockRequest from "../services/useStockRequest";
-import loadingGif from "../assets/loading.gif";
-import { CardMedia } from "@mui/material";
 import { useSelector } from "react-redux";
-import FirmModal from "../components/FirmModal";
-import EditFirmModal from "../components/EditFirmModal";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import FirmCard from "../components/FirmCard";
+
+// export const getFirms = async () => {
+//   try {
+//     const { data } = axiosToken("/firms")
+//     console.log(data)
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
 
 const Firms = () => {
-  const { getFirms, firmDelete } = useStockRequest();
-  const { firms, loading, error } = useSelector((state) => state.firms);
-  const [selectedFirm, setSelectedFirm] = useState(null);
-  const [editOpen, setEditOpen] = useState(false);
-
-  //const [open, setOpen] = useState(false);
+  // const { axiosToken } = useAxios()
+  // const { getFirms, getSales } = useStockRequest()
+  const { getStock } = useStockRequest();
+  const { firms } = useSelector((state) => state.stock);
 
   useEffect(() => {
-    getFirms();
+    // getFirms()
+    // getSales()
+    // getStock("sales")
+    getStock("firms");
   }, []);
 
-  const handleEdit = (firm) => {
-    setSelectedFirm(firm);
-    setEditOpen(true);
-  };
-
   return (
-    <>
-      <h1 style={{ textAlign: "center" }}>FIRMS</h1>
-      {loading && <img src={loadingGif} alt="gif" />}
-      {error && (
-        <Typography variant="h4" color="error" component="div">
-          Oops Somehing went wrong
-        </Typography>
-      )}
-      {selectedFirm && (
-        <EditFirmModal
-          firm={selectedFirm}
-          open={editOpen}
-          setOpen={setEditOpen}
-        />
-      )}
-      <FirmModal />
+    <div>
+      <Typography variant="h4" color={"error"} mb={2}>
+        Firms
+      </Typography>
 
-      <Box
-        xs={{ d: "flex" }}
-        display="flex"
-        alignItems="center"
-        justifyContent="space-evenly"
-        flexWrap="wrap"
-      >
-        {firms?.map((item) => (
-          <Card
-            key={item._id}
-            sx={{
-              maxWidth: 300,
-              m: 5,
-              maxHeight: 500,
-              padding: 1,
-              textAlign: "center",
-              boxShadow: "2px 2px 10px black",
-            }}
-          >
-            <Typography gutterBottom variant="h5" component="div">
-              {item?.name}
-            </Typography>
-            <CardMedia
-              component="img"
-              height="250"
-              image={item?.image}
-              alt="img"
-              sx={{ objectFit: "contain" }}
-            />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                {item?.address}
-              </Typography>
-            </CardContent>
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                {item?.phone}
-              </Typography>
-            </CardContent>
-            <CardActions
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Button size="small" onClick={() => firmDelete(item._id)}>
-                🗑 Delete
-              </Button>
-              <Button
-                size="small"
-                href={item?.url}
-                target="_blank"
-                onClick={() => handleEdit(item)}
-              >
-                🖊 Edit
-              </Button>
-            </CardActions>
-          </Card>
+      <Button variant="contained">New Firm</Button>
+      
+      <FirmModal /> 
+
+      <Grid container gap={2} mt={3} justifyContent={"center"}>
+        {firms.map((firm) => (
+          <Grid item key={firm._id}>
+            <FirmCard firm={firm} />
+          </Grid>
         ))}
-      </Box>
-    </>
+      </Grid>
+    </div>
   );
 };
+
 export default Firms;

@@ -1,4 +1,4 @@
-//import axios from "axios"
+// import axios from "axios"
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 import {
   fetchFail,
@@ -18,13 +18,13 @@ const useApiRequest = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { axiosToken, axiosPublic } = useAxios();
-  //const { token } = useSelector((state) => state.auth)
+  // const { token } = useSelector((state) => state.auth)
   const login = async (userData) => {
     //   const BASE_URL = "https://10001.fullstack.clarusway.com"
 
     dispatch(fetchStart());
     try {
-      //  const { data } = await axios.post(
+      // const { data } = await axios.post(
       //   `${process.env.REACT_APP_BASE_URL}/auth/login`,
       //   userData
       // )
@@ -57,7 +57,7 @@ const useApiRequest = () => {
     dispatch(fetchStart());
     try {
       // await axios(`${process.env.REACT_APP_BASE_URL}/auth/logout`, {
-      // headers: { Authorization: `Token ${token}` },
+      //   headers: { Authorization: `Token ${token}` },
       // })
       await axiosToken.get("/auth/logout");
       dispatch(logoutSuccess());

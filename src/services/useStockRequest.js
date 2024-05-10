@@ -1,65 +1,65 @@
-//! custom hook alanı
 import { useDispatch } from "react-redux";
 import useAxios from "./useAxios";
 import {
-  fetchStart,
-  firmSuccess,
   fetchFail,
-  createFirmSuccess,
-  updateFirmSuccess,
-} from "../features/firmSlice";
+  fetchStart,
+  getFirmsSuccess,
+  getSalesSuccess,
+  getStockSuccess,
+} from "../features/stockSlice";
 
 const useStockRequest = () => {
   const { axiosToken } = useAxios();
   const dispatch = useDispatch();
 
-  const getFirms = async () => {
+  // const getFirms = async () => {
+  //   dispatch(fetchStart())
+  //   try {
+  //     const { data } = await axiosToken("/firms")
+  //     dispatch(getFirmsSuccess(data.data))
+  //   } catch (error) {
+  //     dispatch(fetchFail())
+  //     console.log(error)
+  //   }
+  // }
+
+  // const getSales = async () => {
+  //   dispatch(fetchStart())
+  //   try {
+  //     const { data } = await axiosToken("/sales")
+  //     dispatch(getSalesSuccess(data.data))
+  //   } catch (error) {
+  //     dispatch(fetchFail())
+  //     console.log(error)
+  //   }
+  // }
+
+  const getStock = async (path = "firms") => {
     dispatch(fetchStart());
     try {
-      const { data } = await axiosToken("/firms");
-      // console.log(data);
-      dispatch(firmSuccess(data));
+      const { data } = await axiosToken(`/${path}`);
+      const stockData = data.data;
+      dispatch(getStockSuccess({ stockData, path }));
     } catch (error) {
-      // console.log(error);
       dispatch(fetchFail());
+      console.log(error);
     }
   };
 
-  const createFirm = async (firmInfo) => {
+  const deleteStock = async (path = "firms", id) => {
     dispatch(fetchStart());
     try {
-      const { data } = await axiosToken.post("/firms/", firmInfo);
-      // console.log(data);
-      dispatch(createFirmSuccess(data));
+      await axiosToken.delete(`/${path}/${id}`);
+      getStock(path);
     } catch (error) {
-      // console.log(error);
       dispatch(fetchFail());
+      console.log(error);
     }
   };
 
-  const updateFirm = async (id, firmInfo) => {
-    dispatch(fetchStart());
-    try {
-      const { data } = await axiosToken.put(`/firms/${id}`, firmInfo);
-      // console.log(data);
-      dispatch(updateFirmSuccess(data));
-      getFirms();
-    } catch (error) {
-      // console.log(error);
-      dispatch(fetchFail());
-    }
-  };
+  // return { getFirms, getSales }
 
-  const firmDelete = async (id) => {
-    dispatch(fetchStart());
-    try {
-      const { data } = await axiosToken.delete(`/firms/${id}`);
-      dispatch(firmSuccess(data));
-      getFirms();
-    } catch (error) {
-      dispatch(fetchFail());
-    }
-  };
-  return { getFirms, firmDelete, createFirm };
+  return { getStock, deleteStock };
 };
+
 export default useStockRequest;
