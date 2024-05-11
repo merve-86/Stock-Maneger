@@ -27,6 +27,7 @@ export default function FirmModal({ handleClose, open, info, setInfo }) {
   // });
 
   const { postStock } = useStockRequest();
+  
 
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
