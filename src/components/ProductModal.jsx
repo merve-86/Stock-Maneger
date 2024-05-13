@@ -82,7 +82,7 @@ export default function ProductModal({ handleClose, open, info, setInfo }) {
             />
 
             <Button variant="contained" type="submit">
-            {info._id ? "UPDATE FIRM"  :"ADD FIRM"}  
+            {info._id ? "UPDATE PRODUCT"  :"ADD PRODUCT"}  
             </Button>
           </Box>
         </Box>
