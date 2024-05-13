@@ -5,8 +5,7 @@ import { useSelector } from "react-redux";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import FirmCard from "../components/FirmCard";
-import FirmModal from "../components/FirmModal";
+import SaleModal from "../components/SaleModal";
 import SaleTable from "../components/SaleTable";
 
 const Sales = () => {
@@ -34,7 +33,7 @@ const Sales = () => {
   };
 
   useEffect(() => {
-    getStock("firms");
+    getStock("sales");
   }, []);
 
   return (
@@ -43,7 +42,7 @@ const Sales = () => {
         New Sale
       </Button>
 
-      <FirmModal
+      <SaleModal
         handleClose={handleClose}
         open={open}
         info={info}
