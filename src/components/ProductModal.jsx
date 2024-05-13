@@ -18,13 +18,7 @@ const style = {
   p: 4,
 };
 
-export default function FirmModal({ handleClose, open, info, setInfo }) {
-  // const [info, setInfo] = React.useState({
-  //   name: "",
-  //   phone: "",
-  //   address: "",
-  //   image: "",
-  // });
+export default function ProductModal({ handleClose, open, info, setInfo }) {
 
   const { postStock, putStock } = useStockRequest();
 
@@ -84,16 +78,6 @@ export default function FirmModal({ handleClose, open, info, setInfo }) {
               type="text"
               variant="outlined"
               value={info.address}
-              onChange={handleChange}
-            />
-
-            <TextField
-              label="Image"
-              name="image"
-              id="image"
-              type="url"
-              variant="outlined"
-              value={info.image}
               onChange={handleChange}
             />
 
