@@ -1,10 +1,14 @@
-import * as React from "react";
+
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import useStockRequest from "../services/useStockRequest";
+import { modalStyle } from "../styles/globalStyles";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 
 const style = {
   position: "absolute",
@@ -19,8 +23,7 @@ const style = {
 };
 
 export default function ProductModal({ handleClose, open, info, setInfo }) {
-
-  const { postStock, putStock } = useStockRequest();
+  const { postStock } = useStockRequest();
 
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
@@ -28,12 +31,7 @@ export default function ProductModal({ handleClose, open, info, setInfo }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (info._id) {
-      putStock("firms", info);
-    } else {
-      postStock("firms", info);
-    }
-
+    postStock("products", info);
     handleClose();
   };
 
@@ -45,31 +43,26 @@ export default function ProductModal({ handleClose, open, info, setInfo }) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={modalStyle}>
           <Box
             sx={{ display: "flex", flexDirection: "column", gap: 2 }}
             component={"form"}
             onSubmit={handleSubmit}
           >
-            <TextField
-              label="Firm Name"
-              name="name"
-              id="name"
-              type="text"
-              variant="outlined"
-              value={info.name}
-              onChange={handleChange}
-            />
-
-            <TextField
-              label="Phone"
-              name="phone"
-              id="phone"
-              type="tel"
-              variant="outlined"
-              value={info.phone}
-              onChange={handleChange}
-            />
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Age</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                //value={age}
+                label="Age"
+                onChange={handleChange}
+              >
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </FormControl>
 
             <TextField
               label="Address"
@@ -82,7 +75,7 @@ export default function ProductModal({ handleClose, open, info, setInfo }) {
             />
 
             <Button variant="contained" type="submit">
-            {info._id ? "UPDATE PRODUCT"  :"ADD PRODUCT"}  
+              ADD PRODUCT
             </Button>
           </Box>
         </Box>

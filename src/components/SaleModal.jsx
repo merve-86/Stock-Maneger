@@ -51,47 +51,47 @@ export default function SaleModal({ handleClose, open, info, setInfo }) {
             onSubmit={handleSubmit}
           >
             <TextField
-              label="Firm Name"
-              name="name"
-              id="name"
+              label="Brand"
+              name="brand"
+              id="brand"
               type="text"
               variant="outlined"
-              value={info.name}
+              value={info.brand}
               onChange={handleChange}
             />
 
             <TextField
-              label="Phone"
-              name="phone"
-              id="phone"
-              type="tel"
-              variant="outlined"
-              value={info.phone}
-              onChange={handleChange}
-            />
-
-            <TextField
-              label="Address"
-              name="address"
-              id="address"
+              label="Product"
+              name="product"
+              id="product"
               type="text"
               variant="outlined"
-              value={info.address}
+              value={info.product}
               onChange={handleChange}
             />
 
             <TextField
-              label="Image"
-              name="image"
-              id="image"
-              type="url"
+              label="Quantity"
+              name="quantity"
+              id="quantity"
+              type="text"
               variant="outlined"
-              value={info.image}
+              value={info.quantity}
+              onChange={handleChange}
+            />
+
+            <TextField
+              label="Price"
+              name="price"
+              id="price"
+              type="text"
+              variant="outlined"
+              value={info.price}
               onChange={handleChange}
             />
 
             <Button variant="contained" type="submit">
-              {info._id ? "UPDATE FIRM" : "ADD FIRM"}
+              {info._id ? "UPDATE SALE" : "ADD SALE"}
             </Button>
           </Box>
         </Box>

@@ -4,7 +4,7 @@ import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import useStockRequest from "../services/useStockRequest";
 import { useSelector } from "react-redux";
-
+import EditIcon from "@mui/icons-material/Edit";
 
 
 export default function SaleTable() {
@@ -61,6 +61,14 @@ export default function SaleTable() {
           <GridActionsCellItem
             icon={<DeleteForeverIcon />}
             onClick={() => deleteStock("sales", props.id)}
+            label="Delete"
+          />,
+          <GridActionsCellItem
+            icon={<EditIcon />}
+            onClick={() => {
+              //handleOpen();
+              // setInfo(sales);
+            }}
             label="Delete"
           />,
         ];
