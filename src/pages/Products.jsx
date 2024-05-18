@@ -5,24 +5,26 @@ import Button from "@mui/material/Button";
 import ProductModal from "../components/ProductModal";
 import ProductTable from "../components/ProductTable";
 import { useSelector } from "react-redux";
-import TableSkeleton, { ErrorMessage, NoDataMessage } from "../components/DataFetchMessages";
+import TableSkeleton, {
+  ErrorMessage,
+  NoDataMessage,
+} from "../components/DataFetchMessages";
 
 const Products = () => {
   const { getStock } = useStockRequest();
-  const { error, loading, products } = useSelector((state) => state.stock);
+  const { error, loading } = useSelector((state) => state.stock);
+  const { products } = useSelector((state) => state.stock);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
 
   const initialState = { categoryId: "", brandId: "", name: "" };
-
   const [info, setInfo] = useState(initialState);
 
   const handleClose = () => {
     setOpen(false);
     setInfo(initialState);
   };
-
   useEffect(() => {
     getStock("products");
     getStock("categories");
@@ -32,22 +34,16 @@ const Products = () => {
   return (
     <div>
       <Typography variant="h4" color={"error"} mb={2}>
-        Product
+        Products
       </Typography>
 
-      <Button
-        variant="contained"
-        onClick={handleOpen}
-        sx={{ mb: 3 }}
-        disabled={error}
-      >
+      <Button variant="contained" onClick={handleOpen} disabled={error}>
         New Product
       </Button>
 
       {loading && <TableSkeleton />}
-      {error && <ErrorMessage />}
-      {!error && !loading && products.length > 0 && <ProductTable />}
-      {!error && !products.length && <NoDataMessage />}
+      {!loading && products.length > 0 && <ProductTable />}
+      {!loading && !products.length && <NoDataMessage />}
 
       <ProductModal
         handleClose={handleClose}

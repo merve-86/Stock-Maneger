@@ -1,56 +1,55 @@
 import { useEffect, useState } from "react";
-
 import useStockRequest from "../services/useStockRequest";
-import { useSelector } from "react-redux";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
+import { Button, Container } from "@mui/material";
 import SaleModal from "../components/SaleModal";
 import SaleTable from "../components/SaleTable";
+import TableSkeleton, {
+  ErrorMessage,
+  NoDataMessage,
+} from "../components/DataFetchMessages";
+import { useSelector } from "react-redux";
 
 const Sales = () => {
   const { getStock } = useStockRequest();
-  const { firms } = useSelector((state) => state.stock);
+  const { sales, loading, error } = useSelector((state) => state.stock);
 
   const [open, setOpen] = useState(false);
+
+  const initialState = { brandId: "", productId: "", quantity: "", price: "" };
+  const [info, setInfo] = useState(initialState);
+
   const handleOpen = () => setOpen(true);
-
-  const [info, setInfo] = useState({
-    name: "",
-    phone: "",
-    address: "",
-    image: "",
-  });
-
   const handleClose = () => {
     setOpen(false);
-    setInfo({
-      name: "",
-      phone: "",
-      address: "",
-      image: "",
-    });
+    setInfo(initialState);
   };
 
   useEffect(() => {
+    getStock("products");
     getStock("sales");
-  }, []);
+    getStock("brands");
+  }, []); // eslint-disable-line
 
   return (
-    <div>
-      <Button variant="contained" onClick={handleOpen} sx={{ mb: 3 }}>
+    <Container maxWidth="xl">
+      <Button variant="contained" onClick={handleOpen}>
         New Sale
       </Button>
 
+      {loading && <TableSkeleton />}
+      {!loading && !sales?.length && <NoDataMessage />}
+
+      {!loading && sales?.length > 0 && (
+        <SaleTable setInfo={setInfo} handleOpen={handleOpen} />
+      )}
+
       <SaleModal
-        handleClose={handleClose}
         open={open}
+        handleClose={handleClose}
         info={info}
         setInfo={setInfo}
       />
-
-      <SaleTable />
-    </div>
+    </Container>
   );
 };
 

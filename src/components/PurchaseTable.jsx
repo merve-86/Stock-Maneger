@@ -6,13 +6,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import { btnStyle } from "../styles/globalStyles";
 import Box from "@mui/material/Box";
 
-const SaleTable = ({ handleOpen, setInfo }) => {
+const PurchaseTable = ({ handleOpen, setInfo }) => {
   const { deleteStock } = useStockRequest();
-  const { sales } = useSelector((state) => state.stock);
+  const { purchases } = useSelector((state) => state.stock);
 
   const getRowId = (row) => row._id;
 
-  console.log(sales);
+  console.log(purchases);
   const columns = [
     {
       field: "createdAt",
@@ -21,6 +21,16 @@ const SaleTable = ({ handleOpen, setInfo }) => {
       headerAlign: "center",
       align: "center",
       renderCell: ({ row }) => new Date(row.createdAt).toLocaleString("tr-TR"),
+    },
+
+    {
+      field: "firmId",
+      headerName: "Firm",
+      flex: 1,
+      minWidth: 100,
+      headerAlign: "center",
+      align: "center",
+      renderCell: ({ row }) => row?.firmId?.name,
     },
 
     {
@@ -68,7 +78,7 @@ const SaleTable = ({ handleOpen, setInfo }) => {
       minWidth: 40,
       headerAlign: "center",
       align: "center",
-      renderCell: ({ row: { brandId, price, quantity, productId, _id } }) => {
+      renderCell: ({ row: {firmId, brandId, price, quantity, productId, _id } }) => {
         return [
           <GridActionsCellItem
             key="edit"
@@ -76,7 +86,7 @@ const SaleTable = ({ handleOpen, setInfo }) => {
             label="Edit"
             onClick={() => {
               handleOpen();
-              setInfo({ brandId, price, quantity, productId, _id });
+              setInfo({firmId, brandId, price, quantity, productId, _id });
             }}
             sx={btnStyle}
           />,
@@ -84,7 +94,7 @@ const SaleTable = ({ handleOpen, setInfo }) => {
             key="delete"
             icon={<DeleteIcon />}
             label="Delete"
-            onClick={() => deleteStock("sales", _id)}
+            onClick={() => deleteStock("purchases", _id)}
             sx={btnStyle}
           />,
         ];
@@ -95,7 +105,7 @@ const SaleTable = ({ handleOpen, setInfo }) => {
     <Box sx={{ width: "100%", mt: 4 }}>
       <DataGrid
         autoHeight
-        rows={sales}
+        rows={purchases}
         columns={columns}
         pageSizeOptions={[20, 50, 75, 100]} //? sayfa basina satir sayisi
         disableRowSelectionOnClick
@@ -106,4 +116,4 @@ const SaleTable = ({ handleOpen, setInfo }) => {
   );
 };
 
-export default SaleTable;
+export default PurchaseTable;

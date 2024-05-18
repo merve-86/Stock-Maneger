@@ -1,7 +1,7 @@
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import Modal from "@mui/material/Modal";
 import useStockRequest from "../services/useStockRequest";
 import { modalStyle } from "../styles/globalStyles";
 import InputLabel from "@mui/material/InputLabel";
@@ -9,18 +9,6 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { useSelector } from "react-redux";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 
 export default function ProductModal({ handleClose, open, info, setInfo }) {
   const { postStock } = useStockRequest();
@@ -33,10 +21,10 @@ export default function ProductModal({ handleClose, open, info, setInfo }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     postStock("products", info);
+    //? modal ı kapıtıyoruz
     handleClose();
   };
 
-  console.log(categories);
   return (
     <div>
       <Modal
@@ -52,12 +40,12 @@ export default function ProductModal({ handleClose, open, info, setInfo }) {
             onSubmit={handleSubmit}
           >
             <FormControl fullWidth>
-              <InputLabel id="categoryId">Category</InputLabel>
+              <InputLabel id="categoryId">Categories</InputLabel>
               <Select
                 labelId="categoryId"
                 id="categoryId"
                 name="categoryId"
-                label="Category"
+                label="Categories"
                 value={info.categoryId}
                 onChange={handleChange}
                 required
@@ -76,7 +64,7 @@ export default function ProductModal({ handleClose, open, info, setInfo }) {
                 labelId="brandId"
                 id="brandId"
                 name="brandId"
-                label="Brand"
+                label="Brands"
                 value={info.brandId}
                 onChange={handleChange}
                 required

@@ -6,6 +6,7 @@ import {
   getFirmsSuccess,
   getSalesSuccess,
   getStockSuccess,
+  getProPurBraFirmSuccess,
 } from "../features/stockSlice";
 import { toastErrorNotify, toastSuccessNotify } from "../helper/ToastNotify";
 
@@ -43,8 +44,8 @@ const useStockRequest = () => {
       dispatch(getStockSuccess({ stockData, path }));
     } catch (error) {
       dispatch(fetchFail());
-       //toastErrorNotify(`${path} verileri çekilememiştir`);
-       
+      toastErrorNotify(`${path} verileri çekilememiştir`);
+
       console.log(error);
     }
   };
@@ -57,8 +58,8 @@ const useStockRequest = () => {
       toastSuccessNotify(`${path} başarıyla eklenmiştir`);
     } catch (error) {
       dispatch(fetchFail());
-      console.log(error);
       toastErrorNotify(`${path} eklenirken bir hata oluştu`);
+      console.log(error);
     }
   };
 
@@ -82,14 +83,34 @@ const useStockRequest = () => {
       getStock(path);
     } catch (error) {
       dispatch(fetchFail());
+      toastErrorNotify(`${path} guncellenememiştir.`);
+      console.log(error);
+    }
+  };
 
+  const getProPurBraFirmStock = async () => {
+    dispatch(fetchStart());
+    try {
+      const [pro, pur, bra, fir] = await Promise.all([
+        axiosToken("/products"),
+        axiosToken("/purchases"),
+        axiosToken("/brands"),
+        axiosToken("/firms"),
+      ]);
+      const products = pro?.data?.data;
+      const purchases = pur?.data?.data;
+      const brands = bra?.data?.data;
+      const firms = fir?.data?.data;
+      //console.log(products.data.data, firms.data.data);
+      dispatch(getProPurBraFirmSuccess({ products, purchases, brands, firms }));
+    } catch (error) {
       console.log(error);
     }
   };
 
   // return { getFirms, getSales }
 
-  return { getStock, deleteStock, postStock, putStock};
+  return { getStock, deleteStock, postStock, putStock, getProPurBraFirmStock };
 };
 
 export default useStockRequest;
