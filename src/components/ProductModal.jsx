@@ -21,7 +21,7 @@ export default function ProductModal({ handleClose, open, info, setInfo }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     postStock("products", info);
-    //? modal ı kapıtıyoruz
+ 
     handleClose();
   };
 

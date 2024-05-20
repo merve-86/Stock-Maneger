@@ -107,7 +107,7 @@ const PurchaseTable = ({ handleOpen, setInfo }) => {
         autoHeight
         rows={purchases}
         columns={columns}
-        pageSizeOptions={[20, 50, 75, 100]} //? sayfa basina satir sayisi
+        pageSizeOptions={[20, 50, 75, 100]} 
         disableRowSelectionOnClick
         slots={{ toolbar: GridToolbar }}
         getRowId={getRowId}
