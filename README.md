@@ -1,4 +1,5 @@
-https://github.com/merve-86/Stock-Maneger/assets/154313391/790200cf-c24c-498e-b867-f4f5e9c3c316
+![stock manager](https://github.com/merve-86/Stock-Maneger/assets/154313391/113bfd08-bdbc-403b-810a-9b4ccaa8ed94)
+
 
 https://stock-manager-merve.netlify.app
 
