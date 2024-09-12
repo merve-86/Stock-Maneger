@@ -1,3 +1,9 @@
+![stock manager](https://github.com/merve-86/Stock-Maneger/assets/154313391/113bfd08-bdbc-403b-810a-9b4ccaa8ed94)
+
+
+https://stock-manager-merve.netlify.app
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
